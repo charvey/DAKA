@@ -1,0 +1,3 @@
+for now use jar provided. To run it on hadoop use following command
+make sure to change the path and database names
+hadoop jar stat.jar_path -D mongo.job.verbose=true -D mongo.job.input.format=com.mongodb.hadoop.MongoInputFormat -D mongo.input.uri=mongodb://localhost:27017/your_intput_database.collection -D mongo.input.split_size=10 -D mongo.job.mapper=StatMapper -D mongo.job.reducer=StatReducer -D mongo.job.output.key=Person -D mongo.job.output.value=org.apache.hadoop.io.IntWritable -D mongo.job.mapper.output.key=Person -D mongo.job.mapper.output.value=org.apache.hadoop.io.IntWritable -D mongo.output.uri=mongodb://localhost:27017/your_output_databse.collection -D mongo.job.output.format=com.mongodb.hadoop.MongoOutputFormat
