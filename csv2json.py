@@ -1,17 +1,25 @@
 #!/usr/bin/python
 import csv
 import json
-import sys
+import argparse
+from pymongo import MongoClient
 
-if len(sys.argv) != 3:
-        print("usage: csv2json.py input output")
-        sys.exit(0)
+parser = argparse.ArgumentParser(prog="csv2json.py", usage="%(prog)s -d database -c collection -f csv")
+parser.add_argument('-d', help = 'Database name', required = True)
+parser.add_argument('-c', help = 'Colelction name',required = True)
+parser.add_argument('-f', help = 'CSV file path', required = True)
+args = parser.parse_args()
+dbName = args.d
+colName = args.c
+csvFile = args.f
 
-f = open( sys.argv[1], 'r' )
+client = MongoClient()
+db = client[dbName]
+col = db[colName]
+f = open(csvFile, 'r' )
 header = f.readline()
 header = header.replace('"','').replace('\n','')
 reader = csv.DictReader( f, fieldnames = header.split(',') )
 out = json.dumps( [ row for row in reader ] )
-f1 = open(sys.argv[2], 'w')
-f1.write(out)
-f1.close()
+col.insert(json.loads(out))
+f.close()
