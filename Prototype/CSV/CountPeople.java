@@ -17,7 +17,8 @@ public class CountPeople
 			throws IOException 
 		{
 			String line = value.toString();
-			String [] values = line.split(",");
+			CSVParser parser = new CSVParser();
+			String [] values = parser.parseLine(line);
 			output.collect(new Person(values[25], values[40], values[45]), new IntWritable(1));
 		}
 	}

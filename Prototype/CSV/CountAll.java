@@ -17,7 +17,8 @@ public class CountAll
 			throws IOException 
 		{
 			String line = value.toString();
-			String [] values = line.split(",");
+			CSVParser parser = new CSVParser();
+            String [] values = parser.parseLine(line);
 			for(String s : values)
 			{
 				String temp = s.trim();
