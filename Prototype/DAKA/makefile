@@ -7,6 +7,7 @@ daka.class: people.jar
 	javac daka.java
 
 people.jar:
+	mkdir bin
 	javac -classpath $(HADOOP_HOME)/hadoop-core-1.2.1.jar -d bin ../CSV/*.java
 	jar -cf people.jar -C bin .
 
@@ -24,6 +25,6 @@ down:
 
 clean:
 	rm -rf *.class *.jar
-	rm -rf bin/*
+	rm -rf bin
 	rm -rf input
 	rm -rf output

@@ -2,6 +2,8 @@ import java.util.*;
 import java.io.*;
 
 public class daka {
+	private static final String HADOOP_HOME="/home/user/Desktop/hadoop-1.2.1";
+
 	public static void main(String[] args){
 		Dictionary<String,String> d=parse(args);
 
@@ -12,7 +14,7 @@ public class daka {
 		} else if(d.get("t")!=null){
 			System.out.println("Running "+d.get("t")+" on "+d.get("i")+" to "+d.get("o"));
 
-			String hadoopBin="/home/user/Desktop/hadoop-1.2.1/bin/hadoop";
+			String hadoopBin=HADOOP_HOME+"/bin/hadoop";
 
 			exec(hadoopBin+" dfs -rmr input");
 
@@ -29,12 +31,11 @@ public class daka {
 	}
 
 	private static void exec(String s){
-			Runtime r=Runtime.getRuntime();
 			try{
 				System.out.println(s);
 
-				Process p=r.exec(s);
-				InputStream in=p.getInputStream();
+				Process p=Runtime.getRuntime().exec(s);
+				InputStream in=p.getErrorStream();
 				InputStreamReader stream=new InputStreamReader(in);
 				BufferedReader reader=new BufferedReader(stream);
 
