@@ -1,0 +1,8 @@
+To run examples, call "make countall" and "make countpeople".
+
+You must include the 500000.csv file in this directory.
+
+You must update the path to your hadoop installation in both the makefile and daka.java.
+
+TODO
+Use HADOOP_HOME enviroment variable instead
