@@ -17,8 +17,8 @@ public class DAKA {
 			System.out.println("Running "+d.get("t")+" on "+d.get("i")+" to "+d.get("o"));
 
 			Task task=TaskLocator.locate(d.get("t"));
-
-			TaskConfig config=new TaskConfig(d.get("i"),d.get("o"));
+			TaskConfig config=new TaskConfig(
+				d.get("i"),d.get("o"),d);
 
 			task.PreExecute(config);
 			task.Execute(config);
