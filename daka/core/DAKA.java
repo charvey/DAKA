@@ -1,9 +1,11 @@
 package daka.core;
 
+import daka.util.TaskLocator;
+
 import java.util.*;
 import java.io.*;
 
-public class daka {
+public class DAKA {
 	public static void main(String[] args){
 		Dictionary<String,String> d=parse(args);
 
@@ -14,12 +16,7 @@ public class daka {
 		} else if(d.get("t")!=null){
 			System.out.println("Running "+d.get("t")+" on "+d.get("i")+" to "+d.get("o"));
 
-			Task task;
-			try{
-				task=TaskLocator.locate(d.get("t"));
-			} catch(ArgumentException ex){
-				System.err.println("Task not found.");
-			}
+			Task task=TaskLocator.locate(d.get("t"));
 
 			TaskConfig config=new TaskConfig(d.get("i"),d.get("o"));
 
