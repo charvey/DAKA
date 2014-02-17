@@ -1,20 +1,51 @@
+# DAKA Deployment
+
 ## Description
 
 This directory is a representation of the deployed project.
 
-## Usage
+## Compiling
 
 Fully build and deploy daka and tasks.
+
 	make all
-Compile the daka project.
+
+Compile the DAKA framework by running the following command.
+
 	make daka
-Update task dependencies.
+
+Update the tasks' dependency on the DAKA framework.
+
 	make update-dependency
-Compile tasks.
+
+Compile all tasks by running the following command.
+
 	make tasks
-Deploy daka.
+
+Deploy the DAKA framework to this directory.
+
 	make deploy-daka
-Deploy tasks.
+
+Deploy the tasks to this directory.
+
 	make deploy-tasks
-Completely clean deploy directory.
+
+Completely clean this directory to ensure proper deploy.
+
 	make clean
+
+## Usage
+
+This project is in development.
+
+The steps below describe how to properly deploy the software to this directory.
+
+1. Run the 'make clean' command from the Compiling section.
+1. Run the 'make all' command from the Compiling section.
+
+At this point the software should be deployed.
+
+Currently there is no documentation for properly running the software.
+
+
+
