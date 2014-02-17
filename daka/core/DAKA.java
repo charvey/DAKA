@@ -1,7 +1,5 @@
 package daka.core;
 
-import daka.util.TaskLocator;
-
 import java.util.*;
 import java.io.*;
 
@@ -16,7 +14,7 @@ public class DAKA {
 		} else if(d.get("t")!=null){
 			System.out.println("Running "+d.get("t")+" on "+d.get("i")+" to "+d.get("o"));
 
-			Task task=TaskLocator.locate(d.get("t"));
+			Task task=locateTask(d.get("t"));
 			TaskConfig config=new TaskConfig(
 				d.get("i"),d.get("o"),d);
 
@@ -47,5 +45,26 @@ public class DAKA {
 		return d;
 	}
 
+	private static Task locateTask(String name){
+		return null;
+/*
+		JarFile jarFile = new JarFile(pathToJar);
+            Enumeration e = jarFile.entries();
+
+            URL[] urls = { new URL("jar:file:" + pathToJar+"!/") };
+            cl = URLClassLoader.newInstance(urls);
+
+            while (e.hasMoreElements()) {
+                JarEntry je = (JarEntry) e.nextElement();
+                if(je.isDirectory() || !je.getName().endsWith(".class")){
+                    continue;
+                }
+                // -6 because of .class
+                String className = je.getName().substring(0,je.getName().length()-6);
+                className = className.replace('/', '.');
+                Class c = cl.loadClass(className);
+	}
+*/
+	}
 
 }
