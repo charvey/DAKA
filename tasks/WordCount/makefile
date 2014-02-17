@@ -5,7 +5,7 @@ build:
 	jar -cf $(TASK_NAME).jar -C bin .
 
 deploy:
-	cp $(TASK_NAME).jar ../../bin/tasks/
+	cp $(TASK_NAME).jar ../bin/
 
 clean:
-	rm -rf *.class *.jar
+	rm -rf bin/*.class *.jar
