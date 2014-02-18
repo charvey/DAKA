@@ -1,11 +1,11 @@
-HADOOP_HOME := /home/user/Desktop/hadoop-1.2.1
+TASK_NAME := CountAll
 
 build:
-	javac -classpath $(HADOOP_HOME)/hadoop-core-1.2.1.jar -d bin ./*.java
-	jar -cf CountAll.jar -C bin .
+	javac -cp '../lib/*' -d bin ./*.java
+	jar -cf $(TASK_NAME).jar -C bin .
 
 deploy:
-	cp CountAll.jar ../../bin/tasks/
+	cp $(TASK_NAME).jar ../bin/
 
 clean:
-	rm -rf *.class *.jar
+	rm -rf bin/* $(TASK_NAME).jar

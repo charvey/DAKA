@@ -1,35 +1,51 @@
 import daka.compute.CountReduce;
+import daka.core.Task;
+import daka.core.TaskConfig;
 
-public class CountAll extends Task{
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+
+public class CountAll extends Task {
 	@Override
-	public void PreExecute(){
+	public void PreExecute(TaskConfig config){
 		//TODO setup input file 
 		//FileInput input=new FileInput();
 	}
 
 	@Override
-	public void Execute(){
-		JobConf conf = new JobConf(CountAll.class);
-		conf.setJobName("pipcount");
+	public void Execute(TaskConfig config){
+		try{
+			Configuration conf = new Configuration();
+			Job job = new Job(conf, "countall");
 
-		conf.setOutputKeyClass(Text.class);
-		conf.setOutputValueClass(IntWritable.class);
+			job.setOutputKeyClass(Text.class);
+			job.setOutputValueClass(IntWritable.class);
 
-		conf.setMapperClass(CSVFieldMapper.class);
-		conf.setCombinerClass(CountReduce.class);
-		conf.setReducerClass(CountReduce.class);
+			job.setMapperClass(CSVFieldMapper.Map.class);
+			job.setCombinerClass(CountReduce.Reduce.class);
+			job.setReducerClass(CountReduce.Reduce.class);
 
-		conf.setInputFormat(TextInputFormat.class);
-		conf.setOutputFormat(TextOutputFormat.class);
+			job.setInputFormatClass(TextInputFormat.class);
+			job.setOutputFormatClass(TextOutputFormat.class);
 
-	    FileInputFormat.setInputPaths(conf, new Path(args[0]));
-		FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+			FileInputFormat.addInputPath(job, new Path(config.getInputPath()));
+			FileOutputFormat.setOutputPath(job, new Path(config.getOutputPath()));
 
-		JobClient.runJob(conf);
+			job.waitForCompletion(true);
+		} catch(Exception ex){
+
+		}
 	}
 
 	@Override
-	public void PostExecute(){
+	public void PostExecute(TaskConfig config){
 		//TODO Output to a file
 	}
 }
