@@ -1,7 +1,12 @@
 package daka.core;
 
-import java.util.*;
 import java.io.*;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+
 
 public class DAKA {
 	public static void main(String[] args){
@@ -45,26 +50,40 @@ public class DAKA {
 		return d;
 	}
 
-	private static Task locateTask(String name){
+	private static Task locateTask(String taskName){
+		try{
+			File taskDirectory=new File("tasks/");
+			for(final File file :  taskDirectory.listFiles()){
+				if(file.isDirectory() || !file.getName().endsWith(".jar")){
+					continue;
+				}
+				JarFile jarFile = new JarFile(file);
+				Enumeration e = jarFile.entries();
+
+				URL[] urls = { new URL("jar:file:"+file.getPath()+"!/") };
+				URLClassLoader cl = URLClassLoader.newInstance(urls);
+
+				while (e.hasMoreElements()) {
+					JarEntry je = (JarEntry) e.nextElement();
+					if(je.isDirectory() || !je.getName().endsWith(".class")){
+						continue;
+					}
+					// -6 because of .class
+					String className = je.getName().substring(0,je.getName().length()-6);
+					className = className.replace('/', '.');
+					if(className.equals(taskName)){
+						Class c = cl.loadClass(className);
+						if(Task.class.isAssignableFrom(c)){
+							return (Task)c.newInstance();
+						}
+					}
+				}
+			}
+		} catch(Exception ex){
+
+		}
+
 		return null;
-/*
-		JarFile jarFile = new JarFile(pathToJar);
-            Enumeration e = jarFile.entries();
-
-            URL[] urls = { new URL("jar:file:" + pathToJar+"!/") };
-            cl = URLClassLoader.newInstance(urls);
-
-            while (e.hasMoreElements()) {
-                JarEntry je = (JarEntry) e.nextElement();
-                if(je.isDirectory() || !je.getName().endsWith(".class")){
-                    continue;
-                }
-                // -6 because of .class
-                String className = je.getName().substring(0,je.getName().length()-6);
-                className = className.replace('/', '.');
-                Class c = cl.loadClass(className);
-	}
-*/
 	}
 
 }
