@@ -64,8 +64,6 @@ public final class FPReader extends Configured implements Tool
 
 			
 				long numItems = Long.MAX_VALUE;
-
-					numItems = Integer.MAX_VALUE;
 				
 				
 				while (iterator.hasNext() && count < numItems)
