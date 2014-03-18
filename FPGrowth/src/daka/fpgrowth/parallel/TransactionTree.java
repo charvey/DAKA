@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Representation of transactions modeled on the lines to
+ * Representation of transactions modeled on the lines to FPTree
  * This reduces plenty of space and speeds up Map/Reduce of PFPGrowth algorithm by reducing
  * data size passed from the Mapper to the reducer where FPGrowth mining is done
  */
