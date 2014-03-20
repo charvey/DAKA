@@ -1,8 +1,22 @@
+BUILTIN = CountAll
+SAMPLES = WordCount
+IPIPELINE = CountPeople
+ALLTASKS = $(BUILTIN) $(SAMPLES) $(IPIPELINE)
+.PHONY: $(ALLTASKS) builtin samples ipipeline
 
-all: WordCount
+all: $(ALLTASKS)
 
-WordCount:
-	cd WordCount; make build; make deploy
+builtin: $(BUILTIN)
+
+samples: $(SAMPLES) 
+
+ipipeline: $(IPIPELINE)
+
+$(ALLTASKS):
+	mkdir bin -p
+	$(MAKE) deploy -C $@
 
 clean:
-	rm -rf bin/*
+	rm -rf bin
+	for d in $(ALLTASKS); \
+	do $(MAKE) clean -C $$d; done

@@ -1,11 +1,12 @@
-HADOOP_HOME := /home/user/Desktop/hadoop-1.2.1
+TASK_NAME := CountPeople
 
-build:
-	javac -classpath $(HADOOP_HOME)/hadoop-core-1.2.1.jar -d bin ./*.java
-	jar -cf CountPeople.jar -C bin .
+$(TASK_NAME).jar:
+	mkdir bin -p
+	javac -cp '../lib/*' -d bin ./*.java
+	jar -cf $(TASK_NAME).jar -C bin .
 
-deploy:
-	cp CountPeople.jar ../../bin/tasks/
+deploy: $(TASK_NAME).jar
+	cp $(TASK_NAME).jar ../bin/
 
 clean:
-	rm -rf *.class *.jar
+	rm -rf bin $(TASK_NAME).jar
