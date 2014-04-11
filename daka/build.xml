@@ -2,7 +2,13 @@
 <project name="daka" default="compile">
 	<target name="compile">
 		<mkdir dir="bin"/>
-		<javac srcdir="." classpath="lib/hadoop-core-1.2.1.jar" destdir="bin" includeantruntime="false"/>	
+		<javac srcdir="." destdir="bin" includeantruntime="false">
+			<classpath>
+				<fileset dir="lib">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
 		<jar destfile="bin/daka.jar" basedir="bin">
 	            <zipgroupfileset dir="lib"/>
 	            <manifest>

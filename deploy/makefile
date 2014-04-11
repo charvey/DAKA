@@ -22,4 +22,4 @@ deploy: tasks
 
 example: all
 	cp /usr/share/dict/words input.csv
-	java -jar daka.jar -t WordCount -i input.csv -o output.csv
+	java -jar daka.jar -t WordCount -i input.csv -o output
