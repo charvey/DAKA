@@ -22,13 +22,9 @@ Compile all tasks by running the following command.
 
 	make tasks
 
-Deploy the DAKA framework to this directory.
+Deploy the DAKA and tasks to this directory.
 
-	make deploy-daka
-
-Deploy the tasks to this directory.
-
-	make deploy-tasks
+	make deploy
 
 Completely clean this directory to ensure proper deploy.
 

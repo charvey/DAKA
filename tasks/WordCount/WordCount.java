@@ -23,8 +23,14 @@ public class WordCount extends Task {
 	@Override
 	public void Execute(TaskConfig config){
 		try{
+
 			Configuration conf = new Configuration();
+conf.set("fs.default.name", "hdfs://localhost:9000");
+conf.set("mapred.job.tracker", "localhost:9001");
+
 			Job job = new Job(conf, "wordcount");
+
+			job.setJarByClass(WordCount.class);
 
 			job.setOutputKeyClass(Text.class);
 			job.setOutputValueClass(IntWritable.class);
@@ -37,11 +43,12 @@ public class WordCount extends Task {
 
 			FileInputFormat.addInputPath(job, new Path(config.getInputPath()));
 			FileOutputFormat.setOutputPath(job, new Path(config.getOutputPath()));
-		
+
 			job.waitForCompletion(true);
 		} catch(IOException ex){
 		} catch(InterruptedException ex){
 		} catch(ClassNotFoundException ex){
+		} catch(Exception ex){
 		}
 	}
 

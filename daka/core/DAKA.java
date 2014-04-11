@@ -3,6 +3,7 @@ package daka.core;
 import java.io.*;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.security.SecureClassLoader;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -52,30 +53,25 @@ public class DAKA {
 
 	private static Task locateTask(String taskName){
 		try{
-			File taskDirectory=new File("tasks/");
-			for(final File file :  taskDirectory.listFiles()){
-				if(file.isDirectory() || !file.getName().endsWith(".jar")){
+			JarFile jarFile = new JarFile("daka.jar");
+			Enumeration e = jarFile.entries();
+
+			URL[] urls = { new URL("jar:file:"+"daka.jar"+"!/") };
+			URLClassLoader cl = URLClassLoader.newInstance(urls);
+
+			while (e.hasMoreElements()) {
+				JarEntry je = (JarEntry) e.nextElement();
+				if(je.isDirectory() || !je.getName().endsWith(".class")){
 					continue;
 				}
-				JarFile jarFile = new JarFile(file);
-				Enumeration e = jarFile.entries();
+				// -6 because of .class
+				String className = je.getName().substring(0,je.getName().length()-6);
+				className = className.replace('/', '.');
 
-				URL[] urls = { new URL("jar:file:"+file.getPath()+"!/") };
-				URLClassLoader cl = URLClassLoader.newInstance(urls);
-
-				while (e.hasMoreElements()) {
-					JarEntry je = (JarEntry) e.nextElement();
-					if(je.isDirectory() || !je.getName().endsWith(".class")){
-						continue;
-					}
-					// -6 because of .class
-					String className = je.getName().substring(0,je.getName().length()-6);
-					className = className.replace('/', '.');
-					if(className.equals(taskName)){
-						Class c = cl.loadClass(className);
-						if(Task.class.isAssignableFrom(c)){
-							return (Task)c.newInstance();
-						}
+				if(className.equals(taskName)){
+					Class c = cl.loadClass(className);
+					if(Task.class.isAssignableFrom(c)){
+						return (Task)c.newInstance();
 					}
 				}
 			}

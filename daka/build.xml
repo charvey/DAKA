@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<project name="daka" default="compile">
+	<target name="compile">
+		<mkdir dir="bin"/>
+		<javac srcdir="." classpath="lib/hadoop-core-1.2.1.jar" destdir="bin" includeantruntime="false"/>	
+		<jar destfile="bin/daka.jar" basedir="bin">
+	            <zipgroupfileset dir="lib"/>
+	            <manifest>
+	                <attribute name="Main-Class" value="daka.core.DAKA"/>
+	            </manifest>
+	        </jar>
+	</target>
+	<target name="clean">
+		<delete dir="bin"/>
+	</target>
+</project>

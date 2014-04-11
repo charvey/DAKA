@@ -8,7 +8,7 @@ This directory contains the DAKA framework.
 
 Compile the DAKA framework by runnning the following command.
 
-	make build
+	ant compile
 
 ## Usage
 

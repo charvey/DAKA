@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<project name="daka-tasks" default="compile">
+	<target name="compile">
+		<jar destfile="bin/daka.jar">
+			<zipgroupfileset dir="lib"/>
+			<zipgroupfileset dir="bin"/>
+			<manifest>
+				<attribute name="Main-Class" value="daka.core.DAKA"/>
+			</manifest>
+	        </jar>
+	</target>
+	<target name="clean">
+		<delete dir="bin"/>
+	</target>
+</project>
