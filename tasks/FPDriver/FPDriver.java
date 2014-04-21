@@ -2,9 +2,12 @@
 import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 
-import daka.compute.CountReduce;
+import daka.compute.fpgrowth.parallel.PFPGrowth;
+import daka.compute.helpers.FileUtil;
+import daka.compute.helpers.Parameters;
 import daka.core.Task;
 import daka.core.TaskConfig;
+import daka.io.FileInput;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -32,7 +35,19 @@ public class FPDriver extends Task {
 	private static final Logger log = LoggerFactory.getLogger(FPDriver.class);
 
 	@Override
-	public void PreExecute(TaskConfig config){}
+	public void PreExecute(TaskConfig config){
+		String inputFile=config.getArguments().get("if");
+		if(inputFile!=null)
+		{
+			FileInput fi=new FileInput(inputFile,
+				config.getInputPath(),config.getConfig());
+
+			try{
+				fi.Update();
+			} catch(IOException ex){
+			}
+		}
+	}
 
 	@Override
 	public void Execute(TaskConfig config){
@@ -46,19 +61,14 @@ public class FPDriver extends Task {
 			String encoding = "UTF-8";
 			params.set("encoding", encoding);
 
-			Path inputDir = new Path("hdfs://localhost:9000/user/sgrey/input");
-			Path outputDir = new Path("hdfs://localhost:9000/user/sgrey/output");
+			Path inputDir = new Path(config.getInputPath());
+			Path outputDir = new Path(config.getOutputPath());
 
 			params.set("input", inputDir.toString());
 			params.set("output", outputDir.toString());
 
-			Configuration conf = new Configuration();
-			conf.set("fs.default.name", "hdfs://localhost:9000");
-			conf.set("mapred.job.tracker", "localhost:9001");
-			FileUtil.delete(conf, outputDir);
+			FileUtil.delete(config.getConfig(), outputDir);
 			PFPGrowth.runPFPGrowth(params);
-
-			return 0;
 		} catch(IOException ex){
 		} catch(InterruptedException ex){
 		} catch(ClassNotFoundException ex){

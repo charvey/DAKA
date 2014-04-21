@@ -21,5 +21,10 @@ deploy: tasks
 	cp ../tasks/bin/daka.jar daka.jar
 
 example: all
-	cp /usr/share/dict/words input.csv
-	java -jar daka.jar -t WordCount -i input.csv -o output
+	cp /usr/share/dict/words words
+	java -jar daka.jar -t WordSet -if words -i example -o example/text_o -of text
+	java -jar daka.jar -t WordCount -if text -i example/text -o example/counts_o -of counts
+
+fpgrowth:
+	java -jar daka.jar -t FPDriver -if 500000.csv -i fpgrowth -o fpgrowth/output
+	java -jar daka.jar -t FPReader -i fpgrowth/output

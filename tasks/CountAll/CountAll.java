@@ -22,8 +22,7 @@ public class CountAll extends Task {
 	@Override
 	public void Execute(TaskConfig config){
 		try{
-			Configuration conf = new Configuration();
-			Job job = new Job(conf, "countall");
+			Job job = new Job(config.getConfig(), "countall");
 
 			job.setOutputKeyClass(Text.class);
 			job.setOutputValueClass(IntWritable.class);

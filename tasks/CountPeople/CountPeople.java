@@ -22,8 +22,7 @@ public class CountPeople extends Task {
 	@Override
 	public void Execute(TaskConfig config){
 		try{
-			Configuration conf = new Configuration();
-			Job job = new Job(conf, "countpeople");
+			Job job = new Job(config.getConfig(), "countpeople");
 
 			job.setOutputKeyClass(Person.class);
 			job.setOutputValueClass(IntWritable.class);

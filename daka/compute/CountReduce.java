@@ -13,15 +13,15 @@ public class CountReduce
 {
 	public static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable> 
 	{
-		public void reduce(final Text key, final Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) 
-			throws IOException 
+		public void reduce(Text key, Iterable<IntWritable> values, Context context) 
+			throws IOException, InterruptedException 
 		{
 			int sum = 0;
-			while (values.hasNext())
+			for(IntWritable value : values)
 			{
-				sum += values.next().get();
+				sum += value.get();
 			}
-			output.collect(key, new IntWritable(sum));
+			context.write(key, new IntWritable(sum));
 		}
 	}
 }

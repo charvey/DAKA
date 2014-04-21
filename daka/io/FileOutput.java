@@ -1,25 +1,35 @@
 package daka.io;
 
-import daka.util.FileUtil;
-
+import java.io.IOException;
 import java.util.Date;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.FileUtil;
+import org.apache.hadoop.fs.LocalFileSystem;
+import org.apache.hadoop.fs.Path;
 
 public class FileOutput{
 	private String hdfsPath;
 	private String destPath;
+	private Configuration config;
 
-	public FileOutput(String hdfsPath, String destPath){
+	public FileOutput(String hdfsPath, String destPath, Configuration config){
 		this.hdfsPath=hdfsPath;
 		this.destPath=destPath;
+		this.config=config;
 	}
 
-	public void Update(){
+	public void Update() throws IOException{
 		Date hdfsDate=new Date();
-		Date destDate=FileUtil.lastModified(this.destPath);
+		Date destDate=new Date(0);
 
 		if(hdfsDate.compareTo(destDate)>0){
-			//remove dest
-			//get file
+			FileUtil.copy(
+				FileSystem.get(config), new Path(hdfsPath),
+				FileSystem.getLocal(config), new Path(destPath),
+				false,true,config
+			);
 		}
 	}
 }

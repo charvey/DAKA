@@ -2,6 +2,8 @@
 import daka.compute.CountReduce;
 import daka.core.Task;
 import daka.core.TaskConfig;
+import daka.io.FileInput;
+import daka.io.FileOutput;
 
 import java.io.IOException;
 
@@ -18,17 +20,24 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class WordCount extends Task {
 	@Override
-	public void PreExecute(TaskConfig config){}
+	public void PreExecute(TaskConfig config){
+		String inputFile=config.getArguments().get("if");
+		if(inputFile!=null)
+		{
+			FileInput fi=new FileInput(inputFile,
+				config.getInputPath(),config.getConfig());
+
+			try{
+				fi.Update();
+			} catch(IOException ex){
+			}
+		}
+	}
 
 	@Override
 	public void Execute(TaskConfig config){
 		try{
-
-			Configuration conf = new Configuration();
-conf.set("fs.default.name", "hdfs://localhost:9000");
-conf.set("mapred.job.tracker", "localhost:9001");
-
-			Job job = new Job(conf, "wordcount");
+			Job job = new Job(config.getConfig(), "wordcount");
 
 			job.setJarByClass(WordCount.class);
 
@@ -53,5 +62,18 @@ conf.set("mapred.job.tracker", "localhost:9001");
 	}
 
 	@Override
-	public void PostExecute(TaskConfig config){}
+	public void PostExecute(TaskConfig config){
+		String outputFile=config.getArguments().get("of");
+		if(outputFile!=null)
+		{
+			FileOutput fo=new FileOutput(
+				config.getOutputPath()+"/part-r-00000",
+				outputFile,config.getConfig());
+
+			try{
+				fo.Update();
+			} catch(IOException ex){
+			}
+		}
+	}
 }

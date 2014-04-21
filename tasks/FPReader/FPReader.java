@@ -2,10 +2,15 @@
 import com.google.common.base.Charsets;
 
 import daka.compute.CountReduce;
+import daka.compute.helpers.Pair;
+import daka.compute.helpers.Parameters;
+import daka.compute.helpers.SequenceFileIterator;
+
 import daka.core.Task;
 import daka.core.TaskConfig;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.HashMap;
@@ -32,13 +37,10 @@ public class FPReader extends Task {
 	public void Execute(TaskConfig config){
 		try{
 			Path[] pathArr;
-			Configuration conf = new Configuration();
-			conf.set("fs.default.name", "hdfs://localhost:9000");
-			conf.set("mapred.job.tracker", "localhost:9001");
-			Path input = new Path(
-				"hdfs://localhost:9000/user/sgrey/output/frequentpatterns/part-r-00000");
+			
+			Path input = new Path(config.getInputPath()+"/part-r-00000");
 
-			FileSystem fs = input.getFileSystem(conf);
+			FileSystem fs = input.getFileSystem(config.getConfig());
 			if (fs.getFileStatus(input).isDir())
 			{
 				pathArr = FileUtil.stat2Paths(fs.listStatus(input, new OutputFilesFilter()));
@@ -58,7 +60,7 @@ public class FPReader extends Task {
 
 				int sub = Integer.MAX_VALUE;
 
-				SequenceFileIterator<?, ?> iterator = new SequenceFileIterator<Writable, Writable>(path, true, conf);
+				SequenceFileIterator<?, ?> iterator = new SequenceFileIterator<Writable, Writable>(path, true, config.getConfig());
 
 				long count = 0;
 
@@ -83,8 +85,6 @@ public class FPReader extends Task {
 			}
 			writer.flush();
 		} catch(IOException ex){
-		} catch(InterruptedException ex){
-		} catch(ClassNotFoundException ex){
 		} catch(Exception ex){
 		}
 	}

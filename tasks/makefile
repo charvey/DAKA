@@ -1,4 +1,4 @@
-BUILTIN = CountAll
+BUILTIN = CountAll FPDriver FPReader
 SAMPLES = WordCount
 IPIPELINE = CountPeople
 ALLTASKS = $(BUILTIN) $(SAMPLES) $(IPIPELINE)

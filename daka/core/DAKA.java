@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.apache.hadoop.conf.Configuration;
 
 public class DAKA {
 	public static void main(String[] args){
@@ -20,13 +21,19 @@ public class DAKA {
 		} else if(d.get("t")!=null){
 			System.out.println("Running "+d.get("t")+" on "+d.get("i")+" to "+d.get("o"));
 
+			Configuration config=new Configuration();
+			config.set("fs.default.name", "hdfs://localhost:9000");
+			config.set("mapred.job.tracker", "localhost:9001");
 			Task task=locateTask(d.get("t"));
-			TaskConfig config=new TaskConfig(
-				d.get("i"),d.get("o"),d);
+			TaskConfig taskConfig=new TaskConfig(
+				d.get("i"),d.get("o"),d,config);
 
-			task.PreExecute(config);
-			task.Execute(config);
-			task.PostExecute(config);
+			System.out.println("PreExecute");
+			task.PreExecute(taskConfig);
+			System.out.println("Execute");
+			task.Execute(taskConfig);
+			System.out.println("PostExecute");
+			task.PostExecute(taskConfig);
 		}
 	}
 
