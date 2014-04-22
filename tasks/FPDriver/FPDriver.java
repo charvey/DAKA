@@ -68,7 +68,7 @@ public class FPDriver extends Task {
 			params.set("output", outputDir.toString());
 
 			FileUtil.delete(config.getConfig(), outputDir);
-			PFPGrowth.runPFPGrowth(params);
+			PFPGrowth.runPFPGrowth(params);//, config.getConfig());
 		} catch(IOException ex){
 		} catch(InterruptedException ex){
 		} catch(ClassNotFoundException ex){

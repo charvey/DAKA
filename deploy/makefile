@@ -26,5 +26,7 @@ example: all
 	java -jar daka.jar -t WordCount -if text -i example/text -o example/counts_o -of counts
 
 fpgrowth:
-	java -jar daka.jar -t FPDriver -if 500000.csv -i fpgrowth -o fpgrowth/output
-	java -jar daka.jar -t FPReader -i fpgrowth/output
+	#java -jar daka.jar -t FPDriver -if 500000.csv -i fpgrowth -o fpgrowth/output
+	#java -jar daka.jar -t FPReader -i fpgrowth/output
+	java -jar daka.jar -t FPDriver -if 500000.csv -i hdfs://localhost:9000/user/user/input -o hdfs://localhost:9000/user/user/output
+	java -jar daka.jar -t FPReader -i hdfs://localhost:9000/user/user/output/frequentpatterns
