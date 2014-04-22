@@ -1,3 +1,7 @@
+package daka.compute.classification.naiveBayes;
+
+import daka.io.CSVParser;
+
 import java.io.IOException;
 import java.util.StringTokenizer;
 import java.util.Set;

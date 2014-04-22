@@ -1,4 +1,4 @@
-
+package daka.compute.classification.naiveBayes;
 
 public class BayesClassifierResult 
 {

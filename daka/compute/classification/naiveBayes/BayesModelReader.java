@@ -1,8 +1,10 @@
+package daka.compute.classification.naiveBayes;
+
+import daka.io.CSVParser;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.PrintWriter;
-
-
 
 public class BayesModelReader 
 {		

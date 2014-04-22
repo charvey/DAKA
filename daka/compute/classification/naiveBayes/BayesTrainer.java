@@ -1,7 +1,8 @@
+package daka.compute.classification.naiveBayes;
+
 import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.fs.Path;
-
 
 public class BayesTrainer 
 {

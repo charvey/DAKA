@@ -1,3 +1,6 @@
+package daka.compute.classification.naiveBayes;
+
+import daka.io.CSVParser;
 
 import java.io.*;
 

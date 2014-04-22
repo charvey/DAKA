@@ -1,11 +1,10 @@
+package daka.compute.classification.naiveBayes;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.Collection;
-
-
 
 public class BayesClassifier 
 {		

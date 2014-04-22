@@ -1,3 +1,5 @@
+package daka.compute.classification.naiveBayes;
+
 import java.io.IOException;
 import java.util.Iterator;
 

@@ -1,9 +1,10 @@
+package daka.compute.classification.naiveBayes;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Dictionary;
 import java.util.Hashtable;
-
 
 public class BayesClassificationTest 
 {

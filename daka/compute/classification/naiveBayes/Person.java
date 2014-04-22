@@ -1,7 +1,10 @@
-import org.apache.hadoop.io.WritableComparable;
+package daka.compute.classification.naiveBayes;
+
 import java.io.IOException;
 import java.io.DataInput;
 import java.io.DataOutput;
+
+import org.apache.hadoop.io.WritableComparable;
 
 public class Person implements WritableComparable
 {
