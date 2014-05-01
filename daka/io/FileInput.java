@@ -22,12 +22,21 @@ public class FileInput{
 	}
 
 	public void Update() throws IOException {
+		boolean copy=false;
+
 		FileSystem fileFS=FileSystem.getLocal(config);
 		FileStatus fileStatus=fileFS.getFileStatus(filePath);
-		FileSystem destFS=FileSystem.get(config);
-		FileStatus destStatus=destFS.getFileStatus(destPath);
 
-		if(fileStatus.getModificationTime()>destStatus.getModificationTime()){
+		FileSystem destFS=FileSystem.get(config);
+		if(!destFS.exists(destPath)){
+			copy=true;
+		} else {
+			FileStatus destStatus=destFS.getFileStatus(destPath);
+			copy=fileStatus.getModificationTime()>destStatus.getModificationTime();
+		}
+
+		if(copy){
+			System.out.println("Moving "+filePath+" to "+destPath);
 			FileUtil.copy(fileFS,filePath,destFS,destPath,false,true,config);
 		}
 	}

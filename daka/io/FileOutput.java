@@ -22,12 +22,21 @@ public class FileOutput{
 	}
 
 	public void Update() throws IOException{
+		boolean copy=false;
+
 		FileSystem hdfsFS=FileSystem.get(config);
 		FileStatus hdfsStatus=hdfsFS.getFileStatus(hdfsPath);
-		FileSystem destFS=FileSystem.getLocal(config);
-		FileStatus destStatus=destFS.getFileStatus(destPath);
 
-		if(hdfsStatus.getModificationTime()>destStatus.getModificationTime()){
+		FileSystem destFS=FileSystem.get(config);
+		if(!destFS.exists(destPath)){
+			copy=true;
+		} else {
+			FileStatus destStatus=destFS.getFileStatus(destPath);
+			copy=hdfsStatus.getModificationTime()>destStatus.getModificationTime();
+		}
+
+		if(copy){
+			System.out.println("Moving "+hdfsPath+" to "+destPath);
 			FileUtil.copy(hdfsFS,hdfsPath,destFS,destPath,false,true,config);
 		}
 	}

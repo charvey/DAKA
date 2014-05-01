@@ -3,11 +3,11 @@ import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 
 import daka.compute.fpgrowth.parallel.PFPGrowth;
-import daka.compute.helpers.FileUtil;
 import daka.compute.helpers.Parameters;
 import daka.core.Task;
 import daka.core.TaskConfig;
 import daka.io.FileInput;
+import daka.util.FileUtil;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
