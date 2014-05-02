@@ -71,19 +71,22 @@ public class DAKA {
 				if(je.isDirectory() || !je.getName().endsWith(".class")){
 					continue;
 				}
-				// -6 because of .class
-				String className = je.getName().substring(0,je.getName().length()-6);
-				className = className.replace('/', '.');
+
+				int startIndex=je.getName().lastIndexOf('/')+1;
+				int endIndex=je.getName().lastIndexOf('.');
+				String className = je.getName().substring(startIndex,endIndex);
+				String classPath = je.getName().substring(0,endIndex).replace('/','.');
 
 				if(className.equals(taskName)){
-					Class c = cl.loadClass(className);
+					Class c = cl.loadClass(classPath);
 					if(Task.class.isAssignableFrom(c)){
-						return (Task)c.newInstance();
+						Task task=(Task)c.newInstance();
+						return task;
 					}
 				}
 			}
 		} catch(Exception ex){
-
+			System.err.println(ex.getMessage());
 		}
 
 		return null;
