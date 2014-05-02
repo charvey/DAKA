@@ -27,7 +27,7 @@ public class FileOutput{
 		FileSystem hdfsFS=FileSystem.get(config);
 		FileStatus hdfsStatus=hdfsFS.getFileStatus(hdfsPath);
 
-		FileSystem destFS=FileSystem.get(config);
+		FileSystem destFS=FileSystem.getLocal(config);
 		if(!destFS.exists(destPath)){
 			copy=true;
 		} else {
