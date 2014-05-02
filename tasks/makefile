@@ -1,6 +1,6 @@
 BUILTIN = CountAll FPDriver FPReader
 SAMPLES = WordCount
-IPIPELINE = CountPeople
+IPIPELINE = CountPeople ClassifyPeople
 ALLTASKS = $(BUILTIN) $(SAMPLES) $(IPIPELINE)
 .PHONY: $(ALLTASKS) builtin samples ipipeline
 
