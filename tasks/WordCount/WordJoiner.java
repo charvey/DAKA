@@ -14,12 +14,13 @@ public class WordJoiner
 		public void reduce(LongWritable key, Iterable<Text> values, Context context) 
 			throws IOException, InterruptedException
 		{
-			String line = "";
+			StringBuilder builder=new StringBuilder();
 			for(Text word : values)
 			{
-				line += (" "+ word.toString());
+				builder.append(" "+ word.toString());
 			}
-			context.write(null, new Text(line));
+			builder.deleteCharAt(0);
+			context.write(null, new Text(builder.toString()));
 		}
 	}
 }

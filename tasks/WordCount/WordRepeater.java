@@ -11,8 +11,10 @@ public class WordRepeater {
 		public void map(LongWritable key, Text value, Context context)
 			throws IOException, InterruptedException
 		{
+			long startBin=(long)value.toString().charAt(0);
 			for(long i=0; i<value.getLength(); i++) {
-				context.write(new LongWritable(key.get()+i), value);
+				long currentBin=(startBin+i)%20;
+				context.write(new LongWritable(currentBin), value);
 			}
 		}
 	}

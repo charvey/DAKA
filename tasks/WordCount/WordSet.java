@@ -3,6 +3,7 @@ import daka.core.Task;
 import daka.core.TaskConfig;
 import daka.io.FileInput;
 import daka.io.FileOutput;
+import daka.util.FileUtil;
 
 import java.io.IOException;
 
@@ -28,6 +29,8 @@ public class WordSet extends Task {
 
 			try{
 				fi.Update();
+
+				FileUtil.delete(config.getConfig(), new Path(config.getOutputPath()));
 			} catch(IOException ex){
 			}
 		}

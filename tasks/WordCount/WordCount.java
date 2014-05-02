@@ -4,12 +4,12 @@ import daka.core.Task;
 import daka.core.TaskConfig;
 import daka.io.FileInput;
 import daka.io.FileOutput;
+import daka.util.FileUtil;
 
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -29,6 +29,8 @@ public class WordCount extends Task {
 
 			try{
 				fi.Update();
+
+				FileUtil.delete(config.getConfig(), new Path(config.getOutputPath()));
 			} catch(IOException ex){
 			}
 		}
@@ -42,7 +44,7 @@ public class WordCount extends Task {
 			job.setJarByClass(WordCount.class);
 
 			job.setOutputKeyClass(Text.class);
-			job.setOutputValueClass(IntWritable.class);
+			job.setOutputValueClass(LongWritable.class);
 
 			job.setMapperClass(WordMapper.Map.class);
 			job.setReducerClass(CountReduce.Reduce.class);
