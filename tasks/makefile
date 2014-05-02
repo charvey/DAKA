@@ -17,6 +17,6 @@ $(ALLTASKS):
 	$(MAKE) deploy -C $@
 
 clean:
-	rm -rf bin
+	rm -rf bin lib/daka.jar
 	for d in $(ALLTASKS); \
 	do $(MAKE) clean -C $$d; done
