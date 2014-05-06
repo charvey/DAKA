@@ -41,7 +41,6 @@ public class PersonMapper
 		Person p=null;
 		try
 		{
-			System.out.println(value.toString());
 			String line = value.toString();
 			CSVParser parser = new CSVParser();
 			String [] values = parser.parseLine(line);
