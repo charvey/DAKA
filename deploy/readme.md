@@ -32,7 +32,7 @@ Completely clean this directory to ensure proper deploy.
 
 ## Usage
 
-This project is in development.
+### Deployment
 
 The steps below describe how to properly deploy the software to this directory.
 
@@ -41,7 +41,20 @@ The steps below describe how to properly deploy the software to this directory.
 
 At this point the software should be deployed.
 
-Currently there is no documentation for properly running the software.
+### Interface
 
+To run DAKA, invoke it with Java's jar interface. You must specify which task you wish to run using the -t flag. Each task will have additional arguments which must be passed.
 
+	java -jar daka.jar -t TaskName
 
+### Tasks
+
+There are currently five tasks available.
+
+For more information look at the [documentation](../tasks/readme.md) for each task.
+
+* WordSet - Takes a body of words and generates a text for use with WordCount
+* WordCount - Counts the occurences of each word in a body of text
+* FPDriver - Analyzes a csv file for frequent patterns
+* FPReader - Displays the results of the frequent pattern analysis
+* ClassifyPeople - Trains or classifies a product classifier for iPipeline data
